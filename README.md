@@ -130,7 +130,7 @@ git clone https://github.com/your-username/hibernate.git
 ## 📝 Ліцензія
 Проект розповсюджується під ліцензією MIT. Для деталей перегляньте файл LICENSE.
 
-## 🧑‍🤝‍🧑 Контрибуція
+## 👫 Контрибуція
 1. Форкніть репозиторій.
 2. Створіть свою гілку (git checkout -b feature-name).
 3. Зробіть зміни та комітте їх (git commit -am 'Add new feature').
@@ -143,5 +143,6 @@ git clone https://github.com/your-username/hibernate.git
 Дата: 11.11.2024
 
 ## 🔗 Посилання
-- [Документація Hibernate](https://hibernate.org/orm/documentation/)
-- [GitHub репозиторій](https://github.com/your-username/hibernate)
+- [Документація Javadoc](https://sunmeat.github.io/hibernate/com/sunmeat/hibernate/package-summary.html)
+- [GitHub репозиторій](https://github.com/sunmeat/hibernate)
+- [Написати розробнику](https://t.me/sunmeat)
