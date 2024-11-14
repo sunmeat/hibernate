@@ -16,25 +16,25 @@
 	<div class="form-grid">
 		<!-- создание студента -->
 		<form id="createForm" action="/students" method="post">
-			<h2>Создать</h2>
+			<h2>Создать студента</h2>
 			<label for="createName">Имя:</label> <input type="text"
 				id="createName" name="name" placeholder="Введите имя" required>
 			<label for="createEmail">Email:</label> <input type="email"
 				id="createEmail" name="email" placeholder="Введите email" required>
-			<button type="submit">Создать</button>
+			<button type="submit">Создать студента</button>
 		</form>
 
 		<!-- чтение студента -->
 		<form id="readForm" action="/students" method="get">
-			<h2>Читать</h2>
+			<h2>Прочитать данные по айди</h2>
 			<label for="readId">ID:</label> <input type="text" id="readId"
 				name="id" placeholder="Введите ID для чтения" required>
-			<button type="submit">Читать</button>
+			<button type="submit">Прочитать данные</button>
 		</form>
 
 		<!-- обновление студента -->
 		<form id="updateForm" action="/students" method="post">
-			<h2>Обновить</h2>
+			<h2>Обновить студента</h2>
 			<input type="hidden" name="_method" value="PUT"> <label
 				for="updateId">ID:</label> <input type="text" id="updateId"
 				name="id" placeholder="Введите ID для обновления" required>
@@ -43,16 +43,16 @@
 			<label for="updateEmail">Новый Email:</label> <input type="email"
 				id="updateEmail" name="email" placeholder="Введите новый email"
 				required>
-			<button type="submit">Обновить</button>
+			<button type="submit">Обновить студента</button>
 		</form>
 
 		<!-- удаление студента -->
 
 		<form id="deleteForm" action="/students/delete" method="post">
-			<h2>Удалить</h2>
+			<h2>Удалить студента</h2>
 			<label for="deleteId">ID:</label> <input type="text" id="deleteId"
 				name="id" placeholder="Введите ID для удаления" required>
-			<button type="submit">Удалить</button>
+			<button type="submit">Удалить студента</button>
 		</form>
 	</div>
 
@@ -173,10 +173,10 @@
                 return response.text();
             })
             .then(message => {
-                document.getElementById('resultText').textContent = message; // Отображаем сообщение в div
+                document.getElementById('resultText').textContent = message; // отображаем сообщение в div
             })
             .catch(error => {
-                document.getElementById('resultText').textContent = error.message; // Отображаем ошибку
+                document.getElementById('resultText').textContent = error.message; // отображаем ошибку
             });
         }
         
