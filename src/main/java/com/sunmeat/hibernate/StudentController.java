@@ -12,6 +12,9 @@ import jakarta.persistence.OptimisticLockException;
 @RequestMapping("/students")
 public class StudentController {
 
+	// кеширование Redis:
+	// https://gist.github.com/sunmeat/62fa29183c71fe69ee9d35a9d2d9a218
+	
 	@Autowired
 	private StudentService studentService;
 
