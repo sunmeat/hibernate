@@ -1,16 +1,10 @@
 package com.sunmeat.hibernate;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.Version;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "students")
 public class Student {
-
 	@Version
 	private Long version;
 
@@ -21,8 +15,7 @@ public class Student {
 	private String name;
 	private String email;
 
-	public Student() {
-	}
+	public Student() {}
 
 	public Student(String name, String email) {
 		this.name = name;
