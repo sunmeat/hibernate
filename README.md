@@ -139,8 +139,8 @@ git clone https://github.com/your-username/hibernate.git
 
 ## 👨‍💻 Автор
 **Олександр Загоруйко**  
-Версія: 1.0.0.1  
-Дата: 11.11.2024
+Версія: 1.0.0.2  
+Дата: 07.11.2025
 
 ## 🔗 Посилання
 - [Документація Javadoc](https://sunmeat.github.io/hibernate/com/sunmeat/hibernate/package-summary.html)
