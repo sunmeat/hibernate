@@ -1,93 +1,88 @@
 package com.sunmeat.hibernate;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityNotFoundException;
-import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Transactional;
-
+import org.springframework.transaction.annotation.*;
 import java.util.List;
 
 @Service
 public class StudentService {
-
     @Autowired
     private StudentRepo studentRepository;
 
     @PersistenceContext
     private EntityManager entityManager;
 
-    /* в Hibernate кэш первого уровня (или L1-кэш) — это встроенный механизм
-     * для кэширования сущностей на уровне сессии EntityManager. Он всегда включён 
-     * по умолчанию и работает на уровне текущей сессии (транзакции). смысл его работы
-     * заключается в том, что при первом запросе на загрузку объекта он сохраняется
-     * в L1-кэше и не запрашивается повторно из базы данных, если он уже находится в кэше.
-     * 
-     * когда вы запрашиваете объект с помощью метода find(), он сначала ищется в кэше
-     * первого уровня. если объекта в кэше нет, Hibernate отправляет SQL-запрос в БД,
-     * загружает объект и сохраняет его в L1-кэше.
-     * 
-     * если в рамках одной и той же сессии вы снова запрашиваете тот же объект (например,
-     * студента с тем же ID), Hibernate получает его из L1-кэша, а не из базы данных.
-     * это уменьшает количество SQL-запросов и ускоряет работу приложения.
-     * 
-     * если объект был изменен в рамках текущей сессии (например, при вызове updateStudent),
-     * то при вызове метода flush() (происходит автоматически при завершении транзакции)
-     * изменения будут синхронизированы с базой данных.
-     * 
-     * когда сессия EntityManager закрывается, кэш первого уровня очищается, и его данные
-     * больше не доступны. поэтому, если тот же объект требуется в новой сессии, его
-     * снова нужно будет загрузить из базы данных.
-     * 
-     * в классе StudentService, при вызове метода findById() или метода updateStudent(),
-     * если несколько раз вызвать findById() с одним и тем же ID, то при первом вызове
-     * findById() Hibernate выполнит SQL-запрос к базе и сохранит объект в L1-кэше.
-     * при последующих вызовах findById() для того же ID объект будет извлечен из L1-кэша,
-     * и SQL-запрос больше не выполняется.
-     * */
-    // поиск студента по ID
+    /* Hibernate кеш першого рівня (або L1-кеш) - це вбудований механізм 
+* для кешування сутностей на рівні сесії EntityManager. він завжди включений 
+* за замовчуванням та працює на рівні поточної сесії (транзакції). сенс його роботи 
+* полягає в тому, що при першому запиті на завантаження об'єкта він зберігається 
+* в L1-кеші і не вимагає повторного завантаження з бази даних, якщо він вже знаходиться в кеші. 
+* 
+* коли запитується об'єкт за допомоги методу find(), він спочатку шукається в кеші 
+* першого рівня. якщо об'єкта в кеші немає, Hibernate відправляє SQL-запит до БД, 
+* завантажує об'єкт і зберігає його в L1-кеші. 
+* 
+* якщо в рамках однієї і тієї ж сесії ви знову запитуєте той самий об'єкт (наприклад, 
+* студент з тим же ID), Hibernate отримує його з L1-кешу, а не з бази даних. 
+* це зменшує кількість SQL-запитів та прискорює роботу програми. 
+* 
+* якщо об'єкт було змінено в рамках поточної сесії (наприклад, під час виклику updateStudent), 
+* то при виклику методу flush() (відбувається автоматично при завершенні транзакції) 
+* зміни будуть синхронізовані з базою даних. 
+* 
+* коли сесія EntityManager закривається, кеш першого рівня очищається, та його дані 
+* більше не доступні. тому, якщо той самий об'єкт потрібен у новій сесії, його 
+* знову потрібно буде завантажити з бази даних. 
+* 
+* у класі StudentService, при виклику методу findById() або методу updateStudent(), 
+* якщо кілька разів викликати findById() з одним і тим самим ID, то при першому виклику 
+* findById() Hibernate виконає SQL-запит до бази та збереже об'єкт у L1-кеші. 
+* при наступних викликах findById() для того ж ID об'єкт буде вилучений з L1-кешу, 
+* та SQL-запит більше не виконується. 
+* */ 
+// пошук студента за ID
     @Transactional(readOnly = true)
     public Student findById(Long id) {
     	
-    	// Student student1 = findById(id); // первый вызов: загрузка из базы и сохранение в L1-кэш
-        // Student student2 = findById(id); // второй вызов: получение из L1-кэша, без SQL-запроса
+    	// Student student1 = findById(id); // перший виклик: завантаження з бази та збереження в L1-кеш
+        // Student student2 = findById(id); // другий виклик: отримання з L1-кешу, без SQL-запиту
         
         return studentRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Студент с ID " + id + " не найден"));
+                .orElseThrow(() -> new EntityNotFoundException("Студента з ID " + id + " не знайдено"));
     }
 
-    // получение всех студентов
+    // отримання всіх студентів
     @Transactional(readOnly = true)
     public List<Student> findAll() {
         return studentRepository.findAll();
     }
 
-    // создание нового студента
+    // створення нового студента
     @Transactional
     public void saveStudent(String name, String email) {
-        Student newStudent = new Student();
+        var newStudent = new Student();
         newStudent.setName(name);
         newStudent.setEmail(email);
         studentRepository.save(newStudent);
     }
 
-    // обновление существующего студента
+    // оновлення існуючого студента
     @Transactional
     public void updateStudent(Long id, String name, String email) {
-        Student student = findById(id);
+        var student = findById(id);
         student.setName(name);
         student.setEmail(email);
         studentRepository.save(student);
     }
 
-    // удаление студента
+    // видалення студента
     @Transactional(isolation = Isolation.READ_COMMITTED)
-    /* READ_COMMITTED - "Прочитанные данные должны быть зафиксированы":
-     * транзакция видит только те данные, которые были зафиксированы другими транзакциями.
-     * это исключает "грязные" чтения (ситуацию, когда одна транзакция видит незавершенные
-     * изменения другой транзакции) */
+   /* READ_COMMITTED - "Прочитані дані мають бути зафіксовані": 
+* транзакція бачить лише дані, які були зафіксовані іншими транзакціями. 
+* це виключає "брудні" читання (ситуацію, коли одна транзакція бачить незавершені 
+* зміни іншої транзакції) */
     public void deleteStudent(Long id) {
         if (!studentRepository.existsById(id)) {
             throw new EntityNotFoundException("Студент с ID " + id + " не найден");
