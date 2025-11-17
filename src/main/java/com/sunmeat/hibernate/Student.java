@@ -15,11 +15,11 @@ public class Student {
 	private String name;
 	private String email;
 
-	public Student() {}
+	public Student() {} // має бути обов'язково присутній! це вимога гібернейта!
 
 	public Student(String name, String email) {
-		this.name = name;
-		this.email = email;
+		setName(name);
+		setEmail(email);
 	}
 
 	public Long getId() {
