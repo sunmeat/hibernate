@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html","k":"18"},{"p":"site.sunmeat.hibernate","l":"BrowserLauncher"},{"p":"site.sunmeat.hibernate","l":"HibernateApplication"},{"p":"site.sunmeat.hibernate","l":"Student"},{"p":"site.sunmeat.hibernate","l":"WebController"}];updateSearchResults();
